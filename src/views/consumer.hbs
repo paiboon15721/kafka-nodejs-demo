@@ -4,14 +4,41 @@
   <div class="alert alert-primary" role="alert">
     <h1>Welcome to consumer.</h1>
   </div>
+  <div id="customers">
+    <div v-if="fetching" class="text-center">
+      <div class="spinner-border text-primary" role="status">
+        <span class="sr-only">Fetching...</span>
+      </div>
+    </div>
+    <div class="row">
+      <div v-for="v in customers" class="col-md-4 mb-3">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">${v.name}</h5>
+            <p class="card-text">${v.description}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 {{#contentFor "javascript"}}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.slim.js"></script>
+<script src="/socket.io/socket.io.js"></script>
 <script>
-  var socket = io()
-  socket.on('booking', function (msg) {
-    console.log(msg)
+  var customers = new Vue({
+    el: '#customers',
+    delimiters: ['${', '}'],
+    data: () => ({
+      customers: [],
+      fetching: false
+    }),
+    mounted() {
+      var socket = io()
+      socket.on('booking', (msg) => {
+        this.customers.push(msg.value)
+      })
+    }
   })
 </script>
 {{/contentFor}}
