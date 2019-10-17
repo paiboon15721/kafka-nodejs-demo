@@ -27,7 +27,7 @@ r.get('/producer', async ctx => {
 
 r.post('/producer', async ctx => {
   const { body } = ctx.request
-  const result = await send(body)
+  const result = await send(JSON.stringify(body))
   ctx.body = result
 })
 

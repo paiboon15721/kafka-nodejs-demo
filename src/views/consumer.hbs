@@ -9,5 +9,9 @@
 {{#contentFor "javascript"}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.slim.js"></script>
 <script>
+  var socket = io()
+  socket.on('booking', function (msg) {
+    console.log(msg)
+  })
 </script>
-{{#contentFor}}
+{{/contentFor}}
