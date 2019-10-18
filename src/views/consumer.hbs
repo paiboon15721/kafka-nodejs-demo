@@ -14,8 +14,7 @@
       <div v-for="v in customers" class="col-md-4 mb-3">
         <div class="card">
           <div class="card-body">
-            <h5 class="card-title">${v.name}</h5>
-            <p class="card-text">${v.description}</p>
+            <p class="card-text">${v}</p>
           </div>
         </div>
       </div>
@@ -36,7 +35,7 @@
     mounted() {
       var socket = io()
       socket.on('booking', (msg) => {
-        this.customers.push(msg.value)
+        this.customers.push(JSON.stringify(msg))
       })
     }
   })

@@ -7,8 +7,8 @@
     "dev": "nodemon -e js,hbs src/index.js",
     "test": "nodemon src/tests/index.js",
     "start": "node src/index.js",
-    "consumer": "node src/consumer.js",
-    "producer": "node src/producer.js",
+    "consumer": "node src/startConsumer.js",
+    "producer": "node src/startProducer.js",
     "update": "git add -A && git commit -m 'update' && git push"
   },
   "author": "Paiboon Auengkongkatong",

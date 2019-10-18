@@ -2,7 +2,12 @@ const { Consumer, KafkaClient } = require('kafka-node')
 
 const { TOPIC, KAFKA_HOST } = process.env
 const client = new KafkaClient({ kafkaHost: KAFKA_HOST })
-const consumer = new Consumer(client, [{ topic: TOPIC }])
+const consumer = new Consumer(client, [{ topic: TOPIC, offset: 0 }], {
+  fromOffset: true,
+  autoCommit: false,
+  fetchMaxWaitMs: 1000,
+  fetchMaxBytes: 1024 * 1024,
+})
 
 module.exports = io => {
   io.on('connection', function(socket) {
@@ -11,8 +16,8 @@ module.exports = io => {
       console.log('user disconnected')
     })
   })
-
   consumer.on('message', function(message) {
-    io.emit('booking', { ...message, value: JSON.parse(message.value) })
+    console.log(message)
+    io.emit('booking', message)
   })
 }
